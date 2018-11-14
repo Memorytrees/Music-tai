@@ -10,6 +10,7 @@ img { display: block; }
 @rem: 1080/16rem;
 @import "mixin/1-px.less";
 @import "component/carousel";
+@import "extend/clearfix.less";
 
 #wrap { 
     position: relative;
@@ -128,11 +129,13 @@ img { display: block; }
     }
     .content {
         position: absolute;
-        background: pink;
+        background: #eee;
         top: 270/@rem;
         left: 0;
         right: 0;
         bottom: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
         .nav{
             .1-px(bottom);
             width: 100%;
@@ -160,6 +163,109 @@ img { display: block; }
                             color: #fff;
                         }
                     }
+                }
+            }
+        }
+        .tap-wrap {
+            overflow: hidden;
+            width: 1046/@rem;
+            background: #fff;
+            margin: 0 auto;
+            .tap-head {
+                height: 135/@rem;
+                line-height: 135/@rem;
+                h2 {
+                    float: left;
+                    font-size: 1rem;
+                }
+                span {
+                    float: right;
+                    font-size: .8rem;
+                }
+            }
+            .tap-nav {
+                position: relative;
+                height: 105/@rem;
+                line-height: 105/@rem;
+                a {
+                    float: left;
+                    height: 105/@rem;
+                    width: 120/@rem;
+                    font-size: 44/@rem;
+                    text-align: center;
+                    color: #6b6b6b;
+                }
+                .smallG {
+                    position: absolute;
+                    left: 0;
+                    width: 120/@rem;
+                    height: 9/@rem;
+                    background: #6f900d;
+                    bottom: 10/@rem;
+                }
+            }
+            .tap-content {
+                &:extend(.clearfix all);
+                overflow: hidden;
+                width: 300%;
+                ul {
+                    &:extend(.clearfix all);
+                    float: left;
+                    width: 33.3333%;
+                    li {
+                        width: 506/@rem;
+                        box-sizing: border-box;
+                        margin: 8/@rem;
+                        padding: 5/@rem;
+                        font-size: 40/@rem;
+                        background: #efefef;
+                        color: #000;
+                        overflow: hidden;
+                        float: left;
+                        a {
+                            img {
+                                width: 100%;
+                            }
+                            span {
+                                display: block;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                color: #605e5e;
+                            }
+                        }
+                        .tap-discuss {
+                            .right {
+                                float: left;
+                                vertical-align: middle;
+                                margin-right: 30/@rem;
+                                span:nth-child(1) {
+                                    display: inline-block;
+                                    width: .5rem;
+                                    height: .5rem;
+                                    background: url("../img/ice.png") no-repeat;
+                                    
+                                }
+                            }
+                            .left {
+                                float: left;
+                                vertical-align: middle;
+                                span:nth-child(1) {
+                                    display: inline-block;
+                                    width: .5rem;
+                                    height: .5rem;
+                                    background: url("../img/ice.png") no-repeat;
+                                    background-position: 0 -0.8rem;
+                                }
+                            }
+                        }
+                    }
+                }
+                .tap-loading {
+                    background: url("../img/loading.gif") no-repeat;
+                    background-position: center;
+                    height: 10rem;
+                    
                 }
             }
         }
