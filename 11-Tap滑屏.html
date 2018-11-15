@@ -251,127 +251,8 @@
                 </div>
             </div>
 
-            <!-- Tap选项卡 -->
-            <div class="tap-wrap">
-                <div class="tap-head">
-                    <h2>MV主播</h2>
-                    <span>更多&gt;</span>
-                </div>
-                <div class="tap-nav">
-                    <a href="javascript;:">全部</a>
-                    <a href="javascript;:">内地</a>
-                    <a href="javascript;:">欧美</a>
-                    <a href="javascript;:">韩国</a>
-                    <a href="javascript;:">日本</a>
-                    <a href="javascript;:">港台</a>
-                    <div class="smallG"></div>
-                </div>
-                <div class="tap-content">
-                    <ul>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/a.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/b.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/c.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/d.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/e.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <img src="img/f.jpg">
-                                <span>君に贈る花がないがないがないがないがないがないがない</span>
-                            </a>
-                            <div class="tap-discuss">
-                                <div class="right">
-                                    <span></span>
-                                    <span>9176</span>
-                                </div>
-                                <div class="left">
-                                    <span></span>
-                                    <span>6</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>   
+             
 
-            
-
-            
-            
         </div>
     </div>
 </body>
@@ -391,9 +272,64 @@
                 document.head.appendChild(styleNode);
             })()
 
-            // // Tap选项卡
-            // function tap();
-            // function tap() {}
+            // Tap选项卡
+            tap();
+            function tap() {
+                var wrap = document.querySelector("#wrap .content .tap-wrap");
+                var contentNodes = document.querySelectorAll("#wrap .content .tap-wrap .tap-content");
+                var w = wrap.offsetWidth;
+                for(var i=0; i<contentNodes.length; i++) {
+                    move(contentNodes[i]);
+                }
+
+                function move(content) {
+                    damu.css(content, "translateX", -w);
+
+                    // content 既是滑屏区域，也是滑屏元素
+                    var startPoint = {x:0, y:0};
+                    var elementPoint = {x:0, y:0};
+                    var isX = true;
+                    var isFirst = true;
+                    content.addEventListener("touchstart", function(ev){
+                        ev = ev || event;
+                        var touchC = ev.changedTouches[0];
+                        startPoint.x = touchC.clientX;
+                        startPoint.y = touchC.clientY;
+                        elementPoint.x = damu.css(content, "translateX");
+                        elementPoint.y = damu.css(content, "translateY");
+                        isX = true;
+                        isFirst = true;
+                    })
+                    content.addEventListener("touchsmove", function(ev){
+                        if(isX){
+                            return;
+                        }
+                        
+                        ev = ev || event;
+                        var touchC = ev.changedTouches[0];
+                        var nowPoint = {x:0, y:0};
+                        var dis = {x:0, y:0};
+                        nowPoint.x = touchC.clientX;
+                        nowPoint.y = touchC.clientY;
+                        dis.x = nowPoint.x - startPoint.x;
+                        dis.y = nowPoint.y - startPoint.y;
+                        if(isFirst) {
+                            isFirst = false;
+                            if(Math.abs(dis.y) > Math.abs(dis.x)){
+                                isX = false;
+                                return;
+                            }
+                        }
+                        
+                        var translateX = elementPoint.x + dis.x;
+                        damu.css(content, "translateX");
+                    })
+                    content.addEventListener("touchsend", function(){
+
+                    })
+
+                }
+            }
 
             changeFocus()
 			function changeFocus(){
