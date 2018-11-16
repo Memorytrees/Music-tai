@@ -1,6 +1,6 @@
-.1-px(top, @color:black) {
+.1-px(top,@color:black){
     position: relative;
-    &::before {
+    &:before{
         position: absolute;
         content: "";
         display: block;
@@ -8,18 +8,17 @@
         width: 100%;
         height: 1px;
         background: @color;
-        @media only screen and (-webkit-device-pixel-ratio:2) {
+        @media (-webkit-device-pixel-ratio:2 ){
             transform: scaleY(.5);
         };
-        @media only screen and (-webkit-device-pixel-ratio:2) {
-            transform: scaleY(.33333333333333);
-        };
+        @media (-webkit-device-pixel-ratio:3 ){
+            transform: scaleY(.333333333333);
+        }
     }
 }
-
-.1-px(bottom, @color:black) {
+.1-px(bottom,@color:black){
     position: relative;
-    &::before {
+    &:before{
         position: absolute;
         content: "";
         display: block;
@@ -27,11 +26,11 @@
         width: 100%;
         height: 1px;
         background: @color;
-        @media only screen and (-webkit-device-pixel-ratio:2) {
+        @media (-webkit-device-pixel-ratio:2 ){
             transform: scaleY(.5);
         };
-        @media only screen and (-webkit-device-pixel-ratio:2) {
-            transform: scaleY(.33333333333333);
-        };
+        @media (-webkit-device-pixel-ratio:3 ){
+            transform: scaleY(.333333333333);
+        }
     }
 }
